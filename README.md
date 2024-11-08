@@ -1,4 +1,4 @@
-# f24wb87Eppakayala2
+# f24db87Eppakayala2
 Class: Artifacts
 Attributes:
 - artifact_name (string)
