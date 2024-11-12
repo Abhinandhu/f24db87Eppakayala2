@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  -
+    let results = ([
+    { artifact_name: "Ancient Vase", origin: "Greece", age: 2500 },
+    { artifact_name: "Medieval Sword", origin: "Europe", age: 700 },
+    { artifact_name: "Egyptian Sarcophagus", origin: "Egypt", age: 3000 }
+    ]);
+
+  div.container-fluid
+    div.row
+      each item,index in results
+        div.col-sm-2(onclick=`buy(${index})`)
+          h3 #{item.artifact_name}
+          p Origin: #{item.origin}
+          p Age: #{item.age} years
+  
+
+  //- JavaScript function for purchase alert
+  script.
+    function buy(index) {
+      alert(`You purchased item ${index}`);
+    }

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  button(type="button", class="btn btn-secondary", onclick="boost()") Click Me
+  div#boost add in extra
+  
+  script.
+    let value = 0;
+    let amt = 3;
+
+    function boost() {
+      amt += 1;
+      value += amt;
+      document.getElementById('boost').innerText = `Boosted ${value} by ${amt}`;
+    }
