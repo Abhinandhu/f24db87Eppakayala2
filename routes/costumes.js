@@ -7,5 +7,5 @@ router.get('/', costume_controlers.costume_view_all_Page);
 router.get('/costumes/:id', costume_controlers.costume_detail);
 // POST route for creating a new costume
 router.post('/', costume_controlers.costume_create_post);
-
+router.put('/costumes/:id', costume_controlers.costume_update_put);
 module.exports = router;

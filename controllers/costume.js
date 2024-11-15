@@ -22,9 +22,33 @@ exports.costume_create_post = function(req, res) {
 exports.costume_delete = function(req, res) {
     res.send('NOT IMPLEMENTED: Costume delete DELETE ' + req.params.id);
 };
-exports.costume_update_put = function(req, res) {
-    res.send('NOT IMPLEMENTED: Costume update PUT ' + req.params.id);
+// exports.costume_update_put = function(req, res) {
+//     res.send('NOT IMPLEMENTED: Costume update PUT ' + req.params.id);
+// };
+// Handle Costume update form on PUT.
+exports.costume_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`); // Log request details
+    try {
+        // Find the costume by ID
+        let toUpdate = await Costume.findById(req.params.id);
+
+        // Update the costume properties if they are provided in the request body
+        if (req.body.costume_type) toUpdate.costume_type = req.body.costume_type;
+        if (req.body.cost) toUpdate.cost = req.body.cost;
+        if (req.body.size) toUpdate.size = req.body.size;
+        if (req.body.checkboxsale) toUpdate.sale = true;
+        else toUpdate.sale = false;
+
+        // Save the updated document
+        let result = await toUpdate.save();
+        console.log("Success " + result);
+        res.send(result); // Send the updated document as JSON
+    } catch (err) {
+        res.status(500); // Internal server error status code
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed}`);
+    }
 };
+
 exports.costume_list = async function(req, res) {
     try {
         const theCostumes = await Costume.find();
