@@ -2,8 +2,19 @@ var Costume = require('../models/costume');
 exports.costume_list = function(req, res) {
   res.send('NOT IMPLEMENTED: Costume list');
 };
-exports.costume_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id);
+// exports.costume_detail = function(req, res) {
+//     res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id);
+// };
+exports.costume_detail = async function(req, res) {
+    console.log("detail" + req.params.id); // Log the ID to verify
+    try {
+        // Use findById to fetch the costume by ID from the database
+        let result = await Costume.findById(req.params.id);
+        res.send(result); // Send the costume details as JSON
+    } catch (error) {
+        res.status(500); // Send an error status if not found
+        res.send(`{"error": "Document for id ${req.params.id} not found"}`);
+    }
 };
 exports.costume_create_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Costume create POST');
