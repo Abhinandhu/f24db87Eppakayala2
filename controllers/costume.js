@@ -19,9 +19,9 @@ exports.costume_detail = async function(req, res) {
 exports.costume_create_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Costume create POST');
 };
-exports.costume_delete = function(req, res) {
-    res.send('NOT IMPLEMENTED: Costume delete DELETE ' + req.params.id);
-};
+// exports.costume_delete = function(req, res) {
+//     res.send('NOT IMPLEMENTED: Costume delete DELETE ' + req.params.id);
+// };
 // exports.costume_update_put = function(req, res) {
 //     res.send('NOT IMPLEMENTED: Costume update PUT ' + req.params.id);
 // };
@@ -90,4 +90,35 @@ exports.costume_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
 };
+
+
+
+
+// Handle Costume delete on DELETE.
+exports.costume_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await Costume.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+};
     
+
+// Handle a show one view with id specified by query
+exports.costume_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id); // Log the ID to debug
+    try {
+        let result = await Costume.findById(req.query.id); // Find the costume by ID
+        if (result) {
+            res.render('costumedetail', { title: 'Costume Detail', toShow: result });
+        } else {
+            res.status(404).send(`{'error': 'Costume not found'}`);
+        }
+    } catch (err) {
+        res.status(500).send(`{'error': '${err}'}`);
+    }
+};
