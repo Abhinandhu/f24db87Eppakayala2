@@ -1,0 +1,32 @@
+extends layout
+block content
+  h1= title
+  - let costumeid = toShow._id
+  - let costume_type = toShow.costume_type
+  - let costumecost = toShow.cost
+  - let costumesize = toShow.size
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{costumeid}
+
+  // Define the action for the delete button
+  button(id='deleteButton') Delete
+
+  script.
+    const costumeid = '#{costumeid}';  // Ensure the costumeid is correctly assigned here
+    console.log('Delete button ID:', costumeid);  // Debug log
+
+    document.getElementById('deleteButton').addEventListener('click', () => {
+      console.log('Delete button clicked');  // Debug log
+      fetch(`/resource/costumes/${costumeid}`, {
+        method: 'DELETE',
+      })
+      .then((resp) => resp.json())
+      .then((body) => {
+        alert('Delete succeeded');
+        window.location.href = '/costumes'; // Redirect after successful deletion
+      })
+      .catch((error) => {
+        alert('Delete failed ' + error);
+      });
+    });

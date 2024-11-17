@@ -1,23 +1,36 @@
 extends layout
-
 block content
-    h1= title
-    - let costumeid = toShow._id
-    - let costume_type = toShow.costume_type
-    - let costumecost = toShow.cost
-    - let costumesize = toShow.size
-    
-    div
-        div.row
-            div(class='costumeAttr mr-3') Costume ID:
-            div #{costumeid}
-        div.row
-            div(class='costumeAttr mr-3') Costume Type:
-            div #{costume_type}
-        div.row
-            div(class='costumeAttr mr-3') Costume Size:
-            div #{costumesize}
-        div.row
-            div(class='costumeAttr mr-3') Costume Cost:
-            div #{costumecost}
+  h1= title
+  if (toShow == null)
+    h2 No instance to display
+  else
+    //- Use a Bootstrap card layout to display the costume details
+    .card
+      .card-header
+        h3 Costume Details
+      .card-body
+        .row
+          .col-md-4
+            div(class='costumeAttr') Costume ID:
+          .col-md-8
+            div #{toShow._id}
+        .row
+          .col-md-4
+            div(class='costumeAttr') Costume Type:
+          .col-md-8
+            div #{toShow.costume_type}
+        .row
+          .col-md-4
+            div(class='costumeAttr') Costume Size:
+          .col-md-8
+            div #{toShow.size}
+        .row
+          .col-md-4
+            div(class='costumeAttr') Costume Cost:
+          .col-md-8
+            div $#{toShow.cost}
 
+        .mt-4
+        .d-flex
+          button.btn.btn-warning.mr-2(onclick="window.location.href='/costumes/update/#{toShow._id}'") Edit
+          button.btn.btn-danger(onclick="window.location.href='/costumes/delete?id=#{toShow._id}'") Delete
